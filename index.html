@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vltqss - Офіційний сайт</title>
+    <style>
+        :root {
+            --bg-color: #fdfbf7;
+            --main-brown: #4e342e;
+            --light-brown: #6d4c41;
+            --accent-beige: #d7ccc8;
+            --card-bg: #fffbf5;
+            --text-dark: #271b19;
+            --text-muted: #795548;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Блок банера */
+        .banner-container {
+            width: 100%;
+            background-color: var(--main-brown);
+            display: flex;
+            justify-content: center;
+            border-bottom: 3px solid var(--accent-beige);
+        }
+
+        .banner-img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            display: block;
+        }
+
+        .main-content {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 24px 20px 60px;
+            width: 100%;
+        }
+
+        h2 {
+            color: var(--main-brown);
+            font-size: 20px;
+            margin: 30px 0 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--accent-beige);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Останній реліз */
+        .latest-card {
+            background: var(--card-bg);
+            border: 1px solid var(--accent-beige);
+            border-radius: 14px;
+            padding: 20px;
+            display: flex;
+            gap: 20px;
+            box-shadow: 0 4px 12px rgba(78, 52, 46, 0.05);
+            align-items: center;
+        }
+
+        .latest-cover {
+            width: 150px;
+            height: 150px;
+            border-radius: 10px;
+            object-fit: cover;
+            background: #eee;
+            flex-shrink: 0;
+            border: 1px solid rgba(0,0,0,0.08);
+        }
+
+        .latest-details {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex-grow: 1;
+        }
+
+        .release-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--main-brown);
+        }
+
+        .badge {
+            display: inline-block;
+            background: var(--accent-beige);
+            color: var(--main-brown);
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            align-self: flex-start;
+        }
+
+        .release-date {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .btn-link {
+            display: inline-block;
+            background-color: var(--main-brown);
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            margin-top: 6px;
+            align-self: flex-start;
+            transition: 0.2s ease;
+        }
+
+        .btn-link:hover {
+            background-color: var(--light-brown);
+            transform: translateY(-2px);
+        }
+
+        /* Pre-save */
+        .presave-card {
+            background: linear-gradient(135deg, #f5ebe6 0%, #fffbf5 100%);
+            border: 2px dashed var(--light-brown);
+            border-radius: 14px;
+            padding: 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Дискографія */
+        .disco-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 18px;
+        }
+
+        .disco-card {
+            background: var(--card-bg);
+            border: 1px solid var(--accent-beige);
+            border-radius: 12px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            transition: transform 0.2s ease;
+        }
+
+        .disco-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .disco-cover {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            border-radius: 8px;
+            object-fit: cover;
+            margin-bottom: 10px;
+            border: 1px solid rgba(0,0,0,0.06);
+        }
+
+        .disco-card .release-title {
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+
+        .disco-card .badge {
+            align-self: center;
+            margin-bottom: 6px;
+        }
+
+        .disco-card .btn-link {
+            align-self: stretch;
+            text-align: center;
+            margin-top: 8px;
+        }
+
+        /* Футер */
+        footer {
+            margin-top: auto;
+            padding: 24px 20px;
+            text-align: center;
+            background: #f4ede5;
+            border-top: 1px solid var(--accent-beige);
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .admin-login-btn {
+            background: none;
+            border: none;
+            color: #8d6e63;
+            cursor: pointer;
+            font-size: 12px;
+            margin-top: 8px;
+            text-decoration: underline;
+        }
+
+        /* Модальне вікно адмінки */
+        #adminModal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.65);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+        }
+
+        #adminModal.show { display: flex; }
+
+        .modal-box {
+            background: var(--card-bg);
+            border-radius: 16px;
+            max-width: 560px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 24px;
+            position: relative;
+            border: 2px solid var(--main-brown);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 14px;
+            right: 18px;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-muted);
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--accent-beige);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            background: #fff;
+        }
+
+        .btn-action {
+            background-color: var(--main-brown);
+            color: #fff;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 8px;
+        }
+
+        .btn-action:hover { background-color: var(--light-brown); }
+
+        /* Перевірка на робота */
+        .robot-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            background: #f1ede7;
+            border-radius: 8px;
+            margin: 12px 0;
+        }
+
+        .fake-check {
+            width: 22px; height: 22px;
+            border: 2px solid #5d4037;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fff;
+        }
+
+        .loader {
+            display: none;
+            width: 14px; height: 14px;
+            border: 2px solid #ccc;
+            border-top-color: var(--main-brown);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        .disco-item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fff;
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin-bottom: 6px;
+            border: 1px solid var(--accent-beige);
+            font-size: 14px;
+        }
+
+        .btn-del {
+            background: #d32f2f;
+            color: #fff;
+            border: none;
+            padding: 4px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        @media (max-width: 600px) {
+            .latest-card { flex-direction: column; text-align: center; }
+            .latest-cover { width: 100%; max-width: 180px; height: auto; aspect-ratio: 1/1; }
+            .badge, .btn-link { align-self: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Банер -->
+    <div class="banner-container">
+        <img class="banner-img" src="https://i.postimg.cc/DzWggct4/Untitled141-20260822164633.png" alt="vltqss banner">
+    </div>
+
+    <div class="main-content">
+        <!-- Останній реліз -->
+        <h2>Останній реліз</h2>
+        <div class="latest-card">
+            <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=500&q=80" id="latestCover" class="latest-cover" alt="Cover">
+            <div class="latest-details">
+                <div class="release-title" id="latestTitle">Назва релізу</div>
+                <span class="badge" id="latestType">Сингл</span>
+                <div class="release-date">Дата виходу: <strong id="latestDate">24.08.2026</strong></div>
+                <a href="#" target="_blank" class="btn-link" id="latestLink">Слухати</a>
+            </div>
+        </div>
+
+        <!-- Pre-save -->
+        <div id="presaveWrapper" style="display: none;">
+            <h2>Pre-save</h2>
+            <div class="presave-card">
+                <div class="release-title" id="presaveTitle">--</div>
+                <span class="badge" id="presaveType">EP</span>
+                <div class="release-date">Реліз очікується: <strong id="presaveDate">--.--.----</strong></div>
+                <a href="#" target="_blank" class="btn-link" id="presaveLink">Зберегти трек</a>
+            </div>
+        </div>
+
+        <!-- Дискографія -->
+        <h2>Дискографія</h2>
+        <div class="disco-grid" id="discoGrid"></div>
+    </div>
+
+    <!-- Футер -->
+    <footer>
+        <p>&copy; 2026 vltqss. Всі права захищено.</p>
+        <button class="admin-login-btn" onclick="openAdmin()">Admin Login</button>
+    </footer>
+
+    <!-- Вікно Адмінки -->
+    <div id="adminModal">
+        <div class="modal-box">
+            <span class="close-btn" onclick="closeAdmin()">&times;</span>
+
+            <!-- Авторизація -->
+            <div id="authPanel">
+                <h3 style="color: var(--main-brown); margin-bottom: 15px; text-align: center;">Вхід адміна</h3>
+                <input type="text" id="adminUser" placeholder="Логін">
+                <input type="password" id="adminPass" placeholder="Пароль">
+                
+                <div class="robot-box">
+                    <div class="fake-check" onclick="runRobotCheck()">
+                        <div class="loader" id="robotLoader"></div>
+                        <span id="robotMark" style="display:none; color: green; font-weight: bold;">✓</span>
+                    </div>
+                    <span>Я не робот</span>
+                </div>
+
+                <button class="btn-action" id="btnLogin" style="display:none;" onclick="checkLogin()">Продовжити</button>
+            </div>
+
+            <!-- Панель редагування -->
+            <div id="managePanel" style="display: none;">
+                <h3 style="color: var(--main-brown); margin-bottom: 12px; text-align: center;">Керування сайтом</h3>
+
+                <h4 style="margin: 10px 0 5px; color: var(--main-brown);">Останній реліз</h4>
+                <input type="text" id="inpLatestTitle" placeholder="Назва">
+                <select id="inpLatestType">
+                    <option value="Сингл">Сингл</option>
+                    <option value="EP">EP</option>
+                    <option value="Альбом">Альбом</option>
+                </select>
+                <input type="date" id="inpLatestDate">
+                <input type="text" id="inpLatestCover" placeholder="URL обкладинки">
+                <input type="text" id="inpLatestLink" placeholder="Смарт-лінк (URL)">
+
+                <h4 style="margin: 15px 0 5px; color: var(--main-brown);">Pre-save</h4>
+                <div style="display:flex; gap:10px; align-items:center; margin-bottom: 8px;">
+                    <label style="font-size: 14px;">Показувати блок Pre-save?</label>
+                    <input type="checkbox" id="inpPreShow" style="width: auto; margin: 0;">
+                </div>
+                <input type="text" id="inpPreTitle" placeholder="Назва майбутнього релізу">
+                <select id="inpPreType">
+                    <option value="Сингл">Сингл</option>
+                    <option value="EP">EP</option>
+                    <option value="Альбом">Альбом</option>
+                </select>
+                <input type="date" id="inpPreDate">
+                <input type="text" id="inpPreLink" placeholder="Посилання на pre-save">
+
+                <h4 style="margin: 15px 0 5px; color: var(--main-brown);">Дискографія</h4>
+                <div id="adminDiscoList" style="margin-bottom: 10px;"></div>
+
+                <div style="background: #f1ede7; padding: 12px; border-radius: 8px; margin-bottom: 12px;">
+                    <p style="font-weight: 600; font-size: 13px; margin-bottom: 6px;">Додати новий трек/альбом:</p>
+                    <input type="text" id="inpNewDiscoTitle" placeholder="Назва релізу">
+                    <select id="inpNewDiscoType">
+                        <option value="Сингл">Сингл</option>
+                        <option value="EP">EP</option>
+                        <option value="Альбом">Альбом</option>
+                    </select>
+                    <input type="date" id="inpNewDiscoDate">
+                    <input type="text" id="inpNewDiscoCover" placeholder="URL обкладинки">
+                    <input type="text" id="inpNewDiscoLink" placeholder="Смарт-лінк (URL)">
+                    <button type="button" class="btn-action" style="background:#6d4c41; margin-top:0;" onclick="addDiscoItem()">+ Додати в список</button>
+                </div>
+
+                <button class="btn-action" style="background: #2e7d32;" onclick="saveAndDownload()">Зберегти та завантажити новий index.html</button>
+            </div>
+        </div>
+    </div>
+
+    <script id="siteDataScript">
+        // ОСНОВНІ ДАНІ САЙТУ (ЗМІНЮЮТЬСЯ ЧЕРЕЗ АДМІНКУ)
+        var siteState = {
+            latest: {
+                title: "Назва останнього релізу",
+                type: "Сингл",
+                date: "2026-08-24",
+                cover: "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=500&q=80",
+                link: "https://spotify.com"
+            },
+            presave: {
+                show: false,
+                title: "Новий альбом",
+                type: "Альбом",
+                date: "2026-09-01",
+                link: "https://spotify.com"
+            },
+            discography: [
+                {
+                    title: "Перший Сингл",
+                    type: "Сингл",
+                    date: "2026-01-10",
+                    cover: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=500&q=80",
+                    link: "https://spotify.com"
+                }
+            ]
+        };
+    </script>
+
+    <script>
+        // Відображення на сторінці
+        function renderSite() {
+            document.getElementById('latestTitle').innerText = siteState.latest.title || '';
+            document.getElementById('latestType').innerText = siteState.latest.type || 'Сингл';
+            document.getElementById('latestDate').innerText = formatDate(siteState.latest.date);
+            document.getElementById('latestCover').src = siteState.latest.cover || 'https://via.placeholder.com/150';
+            document.getElementById('latestLink').href = siteState.latest.link || '#';
+
+            const preWrapper = document.getElementById('presaveWrapper');
+            if (siteState.presave && siteState.presave.show) {
+                preWrapper.style.display = 'block';
+                document.getElementById('presaveTitle').innerText = siteState.presave.title || '';
+                document.getElementById('presaveType').innerText = siteState.presave.type || 'Сингл';
+                document.getElementById('presaveDate').innerText = formatDate(siteState.presave.date);
+                document.getElementById('presaveLink').href = siteState.presave.link || '#';
+            } else {
+                preWrapper.style.display = 'none';
+            }
+
+            const discoGrid = document.getElementById('discoGrid');
+            discoGrid.innerHTML = '';
+            if (siteState.discography && siteState.discography.length > 0) {
+                siteState.discography.forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'disco-card';
+                    card.innerHTML = `
+                        <img src="${item.cover || 'https://via.placeholder.com/150'}" class="disco-cover" alt="${item.title}">
+                        <div class="release-title">${item.title}</div>
+                        <span class="badge">${item.type}</span>
+                        <div class="release-date">${formatDate(item.date)}</div>
+                        <a href="${item.link || '#'}" target="_blank" class="btn-link">Слухати</a>
+                    `;
+                    discoGrid.appendChild(card);
+                });
+            } else {
+                discoGrid.innerHTML = '<p style="color:#795548; grid-column: 1/-1;">Поки що немає релізів у дискографії.</p>';
+            }
+        }
+
+        function formatDate(d) {
+            if (!d) return '--.--.----';
+            const p = d.split('-');
+            return p.length === 3 ? `${p[2]}.${p[1]}.${p[0]}` : d;
+        }
+
+        // Адмінка
+        let robotPassed = false;
+
+        function openAdmin() {
+            document.getElementById('adminModal').classList.add('show');
+            document.getElementById('authPanel').style.display = 'block';
+            document.getElementById('managePanel').style.display = 'none';
+            document.getElementById('adminUser').value = '';
+            document.getElementById('adminPass').value = '';
+            document.getElementById('robotLoader').style.display = 'none';
+            document.getElementById('robotMark').style.display = 'none';
+            document.getElementById('btnLogin').style.display = 'none';
+            robotPassed = false;
+        }
+
+        function closeAdmin() {
+            document.getElementById('adminModal').classList.remove('show');
+        }
+
+        function runRobotCheck() {
+            if (robotPassed) return;
+            const loader = document.getElementById('robotLoader');
+            const mark = document.getElementById('robotMark');
+            const btn = document.getElementById('btnLogin');
+
+            loader.style.display = 'inline-block';
+            setTimeout(() => {
+                loader.style.display = 'none';
+                mark.style.display = 'inline-block';
+                robotPassed = true;
+                btn.style.display = 'block';
+            }, 1200);
+        }
+
+        function checkLogin() {
+            const u = document.getElementById('adminUser').value.trim();
+            const p = document.getElementById('adminPass').value.trim();
+
+            if (u === 'vlteri' && p === '2026' && robotPassed) {
+                document.getElementById('authPanel').style.display = 'none';
+                document.getElementById('managePanel').style.display = 'block';
+                populateAdminFields();
+            } else {
+                alert('Невірні дані або не пройдено перевірку на робота!');
+            }
+        }
+
+        function populateAdminFields() {
+            document.getElementById('inpLatestTitle').value = siteState.latest.title;
+            document.getElementById('inpLatestType').value = siteState.latest.type;
+            document.getElementById('inpLatestDate').value = siteState.latest.date;
+            document.getElementById('inpLatestCover').value = siteState.latest.cover;
+            document.getElementById('inpLatestLink').value = siteState.latest.link;
+
+            document.getElementById('inpPreShow').checked = siteState.presave.show;
+            document.getElementById('inpPreTitle').value = siteState.presave.title;
+            document.getElementById('inpPreType').value = siteState.presave.type;
+            document.getElementById('inpPreDate').value = siteState.presave.date;
+            document.getElementById('inpPreLink').value = siteState.presave.link;
+
+            renderAdminDiscoList();
+        }
+
+        function renderAdminDiscoList() {
+            const list = document.getElementById('adminDiscoList');
+            list.innerHTML = '';
+            if (!siteState.discography) siteState.discography = [];
+
+            siteState.discography.forEach((item, index) => {
+                const row = document.createElement('div');
+                row.className = 'disco-item-row';
+                row.innerHTML = `
+                    <span><strong>${item.title}</strong> (${item.type})</span>
+                    <button class="btn-del" onclick="deleteDiscoItem(${index})">Видалити</button>
+                `;
+                list.appendChild(row);
+            });
+        }
+
+        function addDiscoItem() {
+            const title = document.getElementById('inpNewDiscoTitle').value.trim();
+            const type = document.getElementById('inpNewDiscoType').value;
+            const date = document.getElementById('inpNewDiscoDate').value;
+            const cover = document.getElementById('inpNewDiscoCover').value.trim();
+            const link = document.getElementById('inpNewDiscoLink').value.trim();
+
+            if (!title) {
+                alert('Вкажіть назву треку/релізу!');
+                return;
+            }
+
+            siteState.discography.push({ title, type, date, cover, link });
+
+            document.getElementById('inpNewDiscoTitle').value = '';
+            document.getElementById('inpNewDiscoDate').value = '';
+            document.getElementById('inpNewDiscoCover').value = '';
+            document.getElementById('inpNewDiscoLink').value = '';
+
+            renderAdminDiscoList();
+        }
+
+        function deleteDiscoItem(idx) {
+            siteState.discography.splice(idx, 1);
+            renderAdminDiscoList();
+        }
+
+        // Збереження змін прямо у файл index.html
+        function saveAndDownload() {
+            siteState.latest = {
+                title: document.getElementById('inpLatestTitle').value,
+                type: document.getElementById('inpLatestType').value,
+                date: document.getElementById('inpLatestDate').value,
+                cover: document.getElementById('inpLatestCover').value,
+                link: document.getElementById('inpLatestLink').value
+            };
+
+            siteState.presave = {
+                show: document.getElementById('inpPreShow').checked,
+                title: document.getElementById('inpPreTitle').value,
+                type: document.getElementById('inpPreType').value,
+                date: document.getElementById('inpPreDate').value,
+                link: document.getElementById('inpPreLink').value
+            };
+
+            renderSite();
+
+            const currentHtml = document.documentElement.outerHTML;
+            const regex = /<script id="siteDataScript">[\s\S]*?<\/script>/;
+            const newScriptTag = `<script id="siteDataScript">\n        var siteState = ${JSON.stringify(siteState, null, 4)};\n    <\/script>`;
+            
+            const updatedHtml = "<!DOCTYPE html>\n" + currentHtml.replace(regex, newScriptTag);
+
+            const blob = new Blob([updatedHtml], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'index.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            alert('Новий файл index.html завантажено! Завантаж його на GitHub у свій репозиторій.');
+            closeAdmin();
+        }
+
+        // Початковий запуск
+        renderSite();
+    </script>
+</body>
+</html>
